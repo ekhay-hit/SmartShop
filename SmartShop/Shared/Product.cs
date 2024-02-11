@@ -12,6 +12,9 @@ namespace SmartShop.Shared
         [Column(TypeName= "decimal(18,2)")]
         public decimal Price { set; get;}
 
+        // Adding relationship between Category module and Product 
+        public Category? Category { get; set;}
+        public int CategoryId { get; set;}
 
     }
 }

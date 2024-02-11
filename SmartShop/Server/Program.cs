@@ -1,6 +1,9 @@
 global using SmartShop.Shared;
+global using SmartShop.Server.Services.ProductServer;
 global using Microsoft.EntityFrameworkCore;
+
 using SmartShop.Server.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +17,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddScoped<IProductService, ProductService>();
 var app = builder.Build();
 
 app.UseSwaggerUI();
