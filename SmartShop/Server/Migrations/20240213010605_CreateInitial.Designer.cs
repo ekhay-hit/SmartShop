@@ -11,8 +11,8 @@ using SmartShop.Server.Data;
 namespace SmartShop.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240210210912_Categories")]
-    partial class Categories
+    [Migration("20240213010605_CreateInitial")]
+    partial class CreateInitial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,28 +102,28 @@ namespace SmartShop.Server.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            Description = "The is a test for the first book",
-                            ImageUrl = "https://th.bing.com/th/id/R.6d1e757f6ae90bd14e92c28f53507b68?rik=wU%2f%2bO0hTLOuLLA&riu=http%3a%2f%2fsteve-lovelace.com%2fwordpress%2fwp-content%2fuploads%2f2012%2f06%2fwikipedia-book-cover.png&ehk=gsHeCrgqoz9gCkutL0MeqjMwsMKHcVR3gZ1rwT4W7l4%3d&risl=&pid=ImgRaw&r=0",
+                            Description = "The English novel begins behind bars, in extremis. Its first author, John Bunyan, was a Puritan dissenter whose writing starts with sermons and ends with fiction. His famous allegory, the story of Christian, opens with a sentence of luminous simplicity that has the haunting compulsion of the hook in a great melody. \"As I walk'd through the wilderness of this world, I lighted on a certain place, where was a Denn; And I laid me down in that place to sleep: And as I slept I dreamed a Dream.",
+                            ImageUrl = "https://i.guim.co.uk/img/static/sys-images/Observer/Columnist/Columnists/2013/9/17/1379432188768/John-Bunyan-010.jpg?width=620&dpr=1&s=none",
                             Price = 4.66m,
-                            Title = "The First Book"
+                            Title = "Pilgrim's Progress"
                         },
                         new
                         {
                             Id = 2,
                             CategoryId = 1,
-                            Description = "Also the test for the second book is here",
-                            ImageUrl = "https://th.bing.com/th/id/R.41432b68c640604fef2ca79e7415779f?rik=xisO17TB5K1yUg&riu=http%3a%2f%2fwww.fh-augsburg.de%2f%7eharsch%2fanglica%2fChronology%2f20thC%2fKipling%2fkip_juti.jpg&ehk=BhTwvGJSZUMT1wEPyG0ZPYntyh7%2fIYpFIH4E5LLRWi0%3d&risl=&pid=ImgRaw&r=0",
+                            Description = "The Hobbit, or There and Back Again is a children's fantasy novel by English author J. R. R. Tolkien. It was published in 1937 to wide critical acclaim, being nominated for the Carnegie Medal and awarded a prize from the New York Herald Tribune for best juvenile fiction. The book is recognized as a classic in children's literature and is one of the best-selling books of all time, with over 100 million copies sold.",
+                            ImageUrl = "https://th.bing.com/th/id/R.f130ff77f75101067d9cc5818e307ca7?rik=Fw6L%2bImNwU%2bSaw&riu=http%3a%2f%2ftesseraguild.com%2fwp-content%2fuploads%2f2018%2f06%2fHobbit.jpg&ehk=0xpERpQ3Zvv7CZHZts86OPPva7nqdaM33H9h%2b932pG0%3d&risl=&pid=ImgRaw&r=0",
                             Price = 8.66m,
-                            Title = "The second Book"
+                            Title = "The Hobbit"
                         },
                         new
                         {
                             Id = 3,
                             CategoryId = 1,
-                            Description = "Third book will have the test here ",
-                            ImageUrl = "https://th.bing.com/th/id/OIP._ZquNBZkvqxJZTt7srYcwAHaJY?pid=ImgDet&rs=1",
+                            Description = "Homeless and addicted, Wren wants to be alone. But the women chattering in her head insist that she must fulfill her destiny. She knows the ghosts are crazy to think that one small person can finally give voice to women, inciting lasting change in the patriarchy. She would prefer to continue using drugs to silence the voices. But an unwanted pregnancy complicates her plans.",
+                            ImageUrl = "https://www.ingramspark.com/hs-fs/hubfs/TheSumofAllThings_cover_June21_option4(1).jpg?width=1125&name=TheSumofAllThings_cover_June21_option4(1).jpg",
                             Price = 6.66m,
-                            Title = "The third Book"
+                            Title = "The Sum of All Things"
                         });
                 });
 
