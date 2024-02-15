@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using SmartShop.Server.Data;
+using System.Reflection.Metadata.Ecma335;
 
 namespace SmartShop.Server.Controllers
 {
@@ -38,5 +40,13 @@ namespace SmartShop.Server.Controllers
             return Ok(result);
         }
 
+        [HttpGet("category/{categoryUrl}")]
+        public async Task<ActionResult<ServiceResponse<List<Product>>>>GetProductsByCategory(string categoryUrl)
+        {
+            var result= await _productService.GetProductsByCategory(categoryUrl);
+
+            return Ok(result);
+        }
+        
     }
 }
