@@ -8,6 +8,21 @@
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ProductVariant>().HasKey(p=> new { p.ProductId, p.ProductTypeId });
+
+            modelBuilder.Entity<ProductType>().HasData(
+                    new ProductType { Id = 1, Name = "Default" },
+                    new ProductType { Id = 2, Name = "Paperback" },
+                    new ProductType { Id = 3, Name = "E-Book" },
+                    new ProductType { Id = 4, Name = "Audiobook" },
+                    new ProductType { Id = 5, Name = "Stream" },
+                    new ProductType { Id = 6, Name = "Blu-ray" },
+                    new ProductType { Id = 7, Name = "VHS" },
+                    new ProductType { Id = 8, Name = "PC" },
+                    new ProductType { Id = 9, Name = "PlayStation" },
+                    new ProductType { Id = 10, Name = "Xbox" }
+                );
+
             modelBuilder.Entity<Category>().HasData(
 
                new Category
@@ -40,7 +55,7 @@
                     Title = "Pilgrim's Progress",
                     Description = "The English novel begins behind bars, in extremis. Its first author, John Bunyan, was a Puritan dissenter whose writing starts with sermons and ends with fiction. His famous allegory, the story of Christian, opens with a sentence of luminous simplicity that has the haunting compulsion of the hook in a great melody. \"As I walk'd through the wilderness of this world, I lighted on a certain place, where was a Denn; And I laid me down in that place to sleep: And as I slept I dreamed a Dream.",
                     ImageUrl = "https://th.bing.com/th/id/OIP.CuTzc5Em96cjQBYC-WIaDwHaLH?rs=1&pid=ImgDetMain",
-                    Price = 4.66m,
+                 
                     CategoryId= 1
                 },
         new Product
@@ -49,7 +64,7 @@
             Title = "The Hobbit",
             Description = "The Hobbit, or There and Back Again is a children's fantasy novel by English author J. R. R. Tolkien. It was published in 1937 to wide critical acclaim, being nominated for the Carnegie Medal and awarded a prize from the New York Herald Tribune for best juvenile fiction. The book is recognized as a classic in children's literature and is one of the best-selling books of all time, with over 100 million copies sold.",
             ImageUrl = "https://th.bing.com/th/id/R.f130ff77f75101067d9cc5818e307ca7?rik=Fw6L%2bImNwU%2bSaw&riu=http%3a%2f%2ftesseraguild.com%2fwp-content%2fuploads%2f2018%2f06%2fHobbit.jpg&ehk=0xpERpQ3Zvv7CZHZts86OPPva7nqdaM33H9h%2b932pG0%3d&risl=&pid=ImgRaw&r=0",
-            Price = 8.66m,
+          
             CategoryId= 1
         },
         new Product
@@ -58,7 +73,7 @@
             Title = "The Sum of All Things",
             Description = "Homeless and addicted, Wren wants to be alone. But the women chattering in her head insist that she must fulfill her destiny. She knows the ghosts are crazy to think that one small person can finally give voice to women, inciting lasting change in the patriarchy. She would prefer to continue using drugs to silence the voices. But an unwanted pregnancy complicates her plans.",
             ImageUrl = "https://www.ingramspark.com/hs-fs/hubfs/TheSumofAllThings_cover_June21_option4(1).jpg?width=1125&name=TheSumofAllThings_cover_June21_option4(1).jpg",
-            Price = 6.66m,
+           
             CategoryId= 1
 
         },
@@ -147,15 +162,126 @@
                         Description = "The Super Nintendo Entertainment System (SNES), also known as the Super NES or Super Nintendo, is a 16-bit home video game console developed by Nintendo that was released in 1990 in Japan and South Korea.",
                         ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/e/ee/Nintendo-Super-Famicom-Set-FL.jpg",
                     }
-
-
-
-
                 );
+
+            modelBuilder.Entity<ProductVariant>().HasData(
+                new ProductVariant
+                {
+                    ProductId = 1,
+                    ProductTypeId = 2,
+                    Price = 9.99m,
+                    OriginalPrice = 19.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 1,
+                    ProductTypeId = 3,
+                    Price = 7.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 1,
+                    ProductTypeId = 4,
+                    Price = 19.99m,
+                    OriginalPrice = 29.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 2,
+                    ProductTypeId = 2,
+                    Price = 7.99m,
+                    OriginalPrice = 14.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 3,
+                    ProductTypeId = 2,
+                    Price = 6.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 4,
+                    ProductTypeId = 5,
+                    Price = 3.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 4,
+                    ProductTypeId = 6,
+                    Price = 9.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 4,
+                    ProductTypeId = 7,
+                    Price = 19.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 5,
+                    ProductTypeId = 5,
+                    Price = 3.99m,
+                },
+                new ProductVariant
+                {
+                    ProductId = 6,
+                    ProductTypeId = 5,
+                    Price = 2.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 7,
+                    ProductTypeId = 8,
+                    Price = 19.99m,
+                    OriginalPrice = 29.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 7,
+                    ProductTypeId = 9,
+                    Price = 69.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 7,
+                    ProductTypeId = 10,
+                    Price = 49.99m,
+                    OriginalPrice = 59.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 8,
+                    ProductTypeId = 8,
+                    Price = 9.99m,
+                    OriginalPrice = 24.99m,
+                },
+                new ProductVariant
+                {
+                    ProductId = 9,
+                    ProductTypeId = 8,
+                    Price = 14.99m
+                },
+                new ProductVariant
+                {
+                    ProductId = 10,
+                    ProductTypeId = 1,
+                    Price = 159.99m,
+                    OriginalPrice = 299m
+                },
+                new ProductVariant
+                {
+                    ProductId = 11,
+                    ProductTypeId = 1,
+                    Price = 79.99m,
+                    OriginalPrice = 399m
+                }
+            );
 
         }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<ProductVariant> ProductVariants { get; set; }
+        public DbSet<ProductType> ProductTypes { get; set; }
     }
 }
