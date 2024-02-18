@@ -5,7 +5,7 @@
 namespace SmartShop.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class ProductSeeding : Migration
+    public partial class products : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

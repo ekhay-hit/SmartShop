@@ -11,8 +11,8 @@ using SmartShop.Server.Data;
 namespace SmartShop.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240216145710_ProductVariants")]
-    partial class ProductVariants
+    [Migration("20240217005424_createInitial")]
+    partial class createInitial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
