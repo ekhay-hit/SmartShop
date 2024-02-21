@@ -1,4 +1,5 @@
-﻿using SmartShop.Server.Data;
+﻿using Microsoft.Identity.Client;
+using SmartShop.Server.Data;
 using System.Reflection.Metadata.Ecma335;
 
 namespace SmartShop.Server.Services.ProductServer
@@ -65,6 +66,21 @@ namespace SmartShop.Server.Services.ProductServer
                 if (product.Title.Contains(searchText, StringComparison.OrdinalIgnoreCase))
                 {
                     result.Add(product.Title);
+                }
+
+                if(product.Description != null)
+                {
+                    var punctuation = product.Description.Where(char.IsPunctuation).Distinct().ToArray();
+
+                    // going through Description and removing all punctuation ans storing the word in array
+                    var words = product.Description.Split().Select(s => s.Trim(punctuation)).ToArray();
+
+                    foreach(var word in words)
+                    {
+                        if(word.Contains(searchText, StringComparison.OrdinalIgnoreCase) && !result.Contains(word)){
+                            result.Add(word);
+                        }
+                    }
                 }
             }
 
