@@ -73,7 +73,7 @@ namespace SmartShop.Server.Services.ProductServer
                     var punctuation = product.Description.Where(char.IsPunctuation).Distinct().ToArray();
 
                     // going through Description and removing all punctuation ans storing the word in array
-                    var words = product.Description.Split().Select(s => s.Trim(punctuation)).ToArray();
+                    var words = product.Description.Split().Select(s => s.Trim(punctuation));
 
                     foreach(var word in words)
                     {
