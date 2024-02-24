@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using SmartShop.Server.Data;
+using SmartShop.Shared;
+using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
 
 namespace SmartShop.Server.Controllers
@@ -64,5 +66,17 @@ namespace SmartShop.Server.Controllers
 
             return Ok(result);
         }
+
+
+        [HttpGet("Featured")]
+        public async Task<ActionResult<ServiceResponse<List<Product>>>>GetFeaturedProducts()
+     
+        {
+            var result = await _productService.GetFeaturedProducts();
+
+
+            return Ok(result);
+        }
+
     }
 }
