@@ -56,7 +56,7 @@
                     Title = "Pilgrim's Progress",
                     Description = "The English novel begins behind bars, in extremis. Its first author, John Bunyan, was a Puritan dissenter whose writing starts with sermons and ends with fiction. His famous allegory, the story of Christian, opens with a sentence of luminous simplicity that has the haunting compulsion of the hook in a great melody. \"As I walk'd through the wilderness of this world, I lighted on a certain place, where was a Denn; And I laid me down in that place to sleep: And as I slept I dreamed a Dream.",
                     ImageUrl = "https://th.bing.com/th/id/OIP.CuTzc5Em96cjQBYC-WIaDwHaLH?rs=1&pid=ImgDetMain",
-                 
+                    Featured= true,
                     CategoryId= 1
                 },
         new Product
@@ -92,7 +92,7 @@
                         Id = 5,
                         Title = "Nineteen Eighty-Four",
                         Description = "Nineteen Eighty-Four (also stylised as 1984) is a dystopian social science fiction novel and cautionary tale written by English writer George Orwell. It was published on 8 June 1949 by Secker & Warburg as Orwell's ninth and final book completed in his lifetime. Thematically, it centres on the consequences of totalitarianism, mass surveillance and repressive regimentation of people and behaviours within society.[2][3] Orwell, a democratic socialist, modelled the totalitarian government in the novel after Stalinist Russia and Nazi Germany.[2][3][4] More broadly, the novel examines the role of truth and facts within politics and the ways in which they are manipulated.",
-                        ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/c/c3/1984first.jpg",
+                        ImageUrl = "https://3.bp.blogspot.com/-gPb_-PK_GS4/Wh8hyb0dd1I/AAAAAAAADc8/sYrm1ebV7zki8nAnzdOYBQAIzxbBOJsRACEwYBhgL/s1600/1984_by_George_Orwell.jpg",
                         CategoryId = 1
                     },
                     new Product
@@ -110,7 +110,8 @@
                         Title = "Back to the Future",
                         Description = "Back to the Future is a 1985 American science fiction film directed by Robert Zemeckis. Written by Zemeckis and Bob Gale, it stars Michael J. Fox, Christopher Lloyd, Lea Thompson, Crispin Glover, and Thomas F. Wilson. Set in 1985, the story follows Marty McFly (Fox), a teenager accidentally sent back to 1955 in a time-traveling DeLorean automobile built by his eccentric scientist friend Doctor Emmett \"Doc\" Brown (Lloyd). Trapped in the past, Marty inadvertently prevents his future parents' meeting—threatening his very existence—and is forced to reconcile the pair and somehow get back to the future.",
                         ImageUrl = "https://upload.wikimedia.org/wikipedia/en/d/d2/Back_to_the_Future.jpg",
-                       
+                        Featured = true,
+
                     },
                     new Product
                     {
@@ -145,7 +146,8 @@
                         Title = "Day of the Tentacle",
                         Description = "Day of the Tentacle, also known as Maniac Mansion II: Day of the Tentacle, is a 1993 graphic adventure game developed and published by LucasArts. It is the sequel to the 1987 game Maniac Mansion.",
                         ImageUrl = "https://upload.wikimedia.org/wikipedia/en/7/79/Day_of_the_Tentacle_artwork.jpg",
-                      
+                        Featured = true,
+
                     },
                     new Product
                     {
