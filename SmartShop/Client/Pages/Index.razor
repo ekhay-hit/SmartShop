@@ -4,9 +4,16 @@
 @inject IProductService ProductService 
 
 <PageTitle>Smart Shop</PageTitle>
+@if(SearchText ==null && CategoryUrl == null)
+{
+    <Featured_Products />
+}
+else
+{
+    <ProductList />
+}
 
 
-<ProductList />
 
 @code{
     [Parameter]
