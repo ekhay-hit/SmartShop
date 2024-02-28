@@ -14,6 +14,9 @@ namespace SmartShop.Client.Services.ProductService
         }
         public List<Product> Products { get  ; set ; }= new List<Product>();
         public string Message { get; set; } = "Loading products........";
+        public int CurrentPage {  get; set; }
+        public int PageCount {  get; set; }
+        public string LastSearchText {  get; set; }=string.Empty;
 
         public event Action ProductsChanged;
         public async Task<ServiceResponse<Product>> GetProduct(int productId)
@@ -29,8 +32,11 @@ namespace SmartShop.Client.Services.ProductService
             await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>($"api/product/category/{categoryUrl}");
             if (result != null && result.Data != null)
                 Products = result.Data;
-                 
-            
+
+            CurrentPage = 1;
+            PageCount = 0;
+            if (Products.Count == 0) Message = "No Products found";
+
                        ProductsChanged.Invoke();
         }
 
@@ -41,12 +47,16 @@ namespace SmartShop.Client.Services.ProductService
             return result.Data;
         }
 
-        public async Task searchProducts(string searchText)
+        public async Task searchProducts(string searchText, int Page)
         {
-            var result = await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>($"api/product/search/{searchText}");
+            LastSearchText= searchText;
+            var result = await _http.GetFromJsonAsync<ServiceResponse<ProductSearchResult>>($"api/product/search/{searchText}/{Page}");
             if (result != null && result.Data != null)
-            
-                Products = result.Data;
+            {
+                Products = result.Data.Products;
+                CurrentPage = result.Data.CurrentPage;
+                PageCount = result.Data.Pages;
+            }
                 if (Products.Count == 0) Message = "No products found.";
                         ProductsChanged?.Invoke();
             
