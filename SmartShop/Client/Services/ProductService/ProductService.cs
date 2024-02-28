@@ -14,8 +14,8 @@ namespace SmartShop.Client.Services.ProductService
         }
         public List<Product> Products { get  ; set ; }= new List<Product>();
         public string Message { get; set; } = "Loading products........";
-        public int CurrentPage {  get; set; }
-        public int PageCount {  get; set; }
+        public int CurrentPage { get; set; } = 1;
+        public int PageCount { get; set; } = 0;
         public string LastSearchText {  get; set; }=string.Empty;
 
         public event Action ProductsChanged;
@@ -47,10 +47,10 @@ namespace SmartShop.Client.Services.ProductService
             return result.Data;
         }
 
-        public async Task searchProducts(string searchText, int Page)
+        public async Task searchProducts(string searchText, int page)
         {
             LastSearchText= searchText;
-            var result = await _http.GetFromJsonAsync<ServiceResponse<ProductSearchResult>>($"api/product/search/{searchText}/{Page}");
+            var result = await _http.GetFromJsonAsync<ServiceResponse<ProductSearchResult>>($"api/product/search/{searchText}/{page}");
             if (result != null && result.Data != null)
             {
                 Products = result.Data.Products;
