@@ -22,3 +22,17 @@
     text-align: right;
    
 }
+
+.btn-delete {
+    background: none;
+    border: none;
+    padding: 0px;
+    color: red;
+    font-size:12px;
+}
+
+.btn-delete:hover{
+    zoom:120%;
+    color: darkred;
+    font-size: 14px;
+}
