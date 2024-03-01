@@ -6,5 +6,6 @@
 
         Task AddToCart(CartItem item);
         Task<List<CartItem>> GetCartItems();
+        Task<List<CartProductResponse>> GetCartProducts();
     }
 }
