@@ -4,6 +4,7 @@ global using SmartShop.Server.Services.CategoryService;
 global using Microsoft.EntityFrameworkCore;
 
 using SmartShop.Server.Data;
+using SmartShop.Server.Services.CartService;
 
 
 
@@ -21,6 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICartService, CartService>();
 var app = builder.Build();
 
 app.UseSwaggerUI();
