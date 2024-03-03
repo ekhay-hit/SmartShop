@@ -2,9 +2,10 @@ global using SmartShop.Shared;
 global using SmartShop.Server.Services.ProductServer;
 global using SmartShop.Server.Services.CategoryService;
 global using Microsoft.EntityFrameworkCore;
-
+global using SmartShop.Server.Services.AuthService;
 using SmartShop.Server.Data;
 using SmartShop.Server.Services.CartService;
+
 
 
 
@@ -23,6 +24,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 var app = builder.Build();
 
 app.UseSwaggerUI();
