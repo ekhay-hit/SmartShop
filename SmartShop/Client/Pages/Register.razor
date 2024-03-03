@@ -9,20 +9,24 @@
     <div class="mb-3">
         <label for="email">Email</label>
         <input id="email" @bind-value ="user.Email" class=" form-control" />
+        <ValidationMessage For="@(() => user.Email)"/>
     </div>
 
     <div class=" mb-3">
         <label for=" password" >Password</label>
         <input id="password" @bind-value="user.Password" class="form-control" type="password"/>
+        <ValidationMessage For="@(() => user.Password)" />
     </div>
 
     <div calss="mb-3">
         <label for=" confirmPassword">Confirm Password</label>
         <input id="confirmPassword" @bind-value="user.ConfirmPassword" class="form-control" type="password" />
+        <ValidationMessage For="@(() => user.ConfirmPassword)" />
+
     </div>
 
     <button type="submit" class=" mt-3 btn btn-primary">Register</button>
-    <ValidationSummary/>
+    
 </EditForm>
 
 
