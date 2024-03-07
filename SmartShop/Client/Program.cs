@@ -4,7 +4,7 @@ global using SmartShop.Client.Services.ProductService;
 global using SmartShop.Client.Services.CategoryService;
 global using SmartShop.Client.Services.CartService;
 global using SmartShop.Client.Services.AuthService;
-global using Microsoft.AspNetCore.Components.Authorization
+global using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using SmartShop.Client;
