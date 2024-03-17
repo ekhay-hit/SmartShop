@@ -22,14 +22,14 @@ namespace SmartShop.Server.Services.AuthService
         public async Task<ServiceResponse<string>> Login(string email, string password)
         {
             var response = new ServiceResponse<string>();
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower());
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email.ToLower().Equals(email.ToLower()));
             if (user == null)
             {
                 response.success = false;
                 response.Message = "User not found";
             }
 
-            else if(!VerifyPasswordHash(password, user.PasswordSalt, user.PasswordHash)) 
+            else if(!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt )) 
             {
                 response.success = false;
                 response.Message = " Wrong password entered";
@@ -97,12 +97,12 @@ namespace SmartShop.Server.Services.AuthService
 
 
 
-        private bool VerifyPasswordHash(string password, byte[]passwordHash, byte[] passwordsalt)
+        private bool VerifyPasswordHash(string password, byte[]passwordHash, byte[] passwordSalt)
         {
-            using (var hmac = new HMACSHA512(passwordsalt)) 
+            using (var hmac = new HMACSHA512(passwordSalt)) 
             {
                 var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                return computedHash.SequenceEqual(passwordsalt);
+                return computedHash.SequenceEqual(passwordHash);
             }
 
         }
@@ -116,9 +116,9 @@ namespace SmartShop.Server.Services.AuthService
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8
-                .GetBytes(_configuration.GetSection("AppSetting:Token").Value));
+                .GetBytes(_configuration.GetSection("AppSettings:Token").Value));
 
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
             var token = new JwtSecurityToken(
                 claims: claims,

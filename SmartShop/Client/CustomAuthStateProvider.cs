@@ -18,7 +18,7 @@ namespace SmartShop.Client
         }
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            string authToken = await _localStorageService.GetItemAsStringAsync("AuthToken");
+            string authToken = await _localStorageService.GetItemAsStringAsync("authToken");
             var identity = new ClaimsIdentity();
             _http.DefaultRequestHeaders.Authorization = null;
 
@@ -28,12 +28,12 @@ namespace SmartShop.Client
                 {
                     identity = new ClaimsIdentity(ParseClaimsFromJwt(authToken), "jwt");
                     _http.DefaultRequestHeaders.Authorization = 
-                        new AuthenticationHeaderValue("Bearer", authToken.Replace("\"",""));
+                        new AuthenticationHeaderValue("Bearer", authToken.Replace("\"", ""));
 
                 }
                 catch
                 {
-                    await _localStorageService.RemoveItemAsync(authToken);
+                    await _localStorageService.RemoveItemAsync("authToken");
                     identity = new ClaimsIdentity();
 
                 }
@@ -50,7 +50,7 @@ namespace SmartShop.Client
         }
         private byte[] ParseBase64WithoutPadding(string base64)
         {
-            switch(base64.Length)
+            switch(base64.Length %4)
             {
                 case 2: base64 += "=="; break;
                     case 3: base64 += "=";break;
