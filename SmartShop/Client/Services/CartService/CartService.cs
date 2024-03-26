@@ -9,11 +9,13 @@ namespace SmartShop.Client.Services.CartService
 
         private readonly ILocalStorageService _localStorage;
         public HttpClient _http { get; }
+        public AuthenticationStateProvider _authStateProvider;
 
-        public CartService(ILocalStorageService localStorage, HttpClient http)
+        public CartService(ILocalStorageService localStorage, HttpClient http, AuthenticationStateProvider authStateProvider)
         {
             _localStorage = localStorage;
             _http = http;
+            _authStateProvider = authStateProvider;
         }
 
         
@@ -22,6 +24,14 @@ namespace SmartShop.Client.Services.CartService
 
         public async Task AddToCart(CartItem cartItem)
         {
+            if((await _authStateProvider.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated) {
+                Console.WriteLine("user is Authenticated");
+            }
+            else
+            {
+                Console.WriteLine("user is not authenticated");
+
+            }
             var cart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
             if (cart == null)
             {
