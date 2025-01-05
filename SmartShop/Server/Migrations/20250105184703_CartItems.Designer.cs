@@ -12,7 +12,7 @@ using SmartShop.Server.Data;
 namespace SmartShop.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240323203054_CartItems")]
+    [Migration("20250105184703_CartItems")]
     partial class CartItems
     {
         /// <inheritdoc />
@@ -24,6 +24,25 @@ namespace SmartShop.Server.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("SmartShop.Shared.CartItem", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "ProductId", "ProductTypeId");
+
+                    b.ToTable("CartItems");
+                });
 
             modelBuilder.Entity("SmartShop.Shared.Category", b =>
                 {
