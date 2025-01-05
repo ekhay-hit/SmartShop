@@ -10,10 +10,14 @@ namespace SmartShop.Client.Services.CartService
         private readonly ILocalStorageService _localStorage;
         public HttpClient _http { get; }
 
-        public CartService(ILocalStorageService localStorage, HttpClient http)
+        private AuthenticationStateProvider _authStateProvider;
+
+
+        public CartService(ILocalStorageService localStorage, HttpClient http, AuthenticationStateProvider authStateProvider)
         {
             _localStorage = localStorage;
             _http = http;
+            _authStateProvider = authStateProvider;
         }
 
         
@@ -22,6 +26,15 @@ namespace SmartShop.Client.Services.CartService
 
         public async Task AddToCart(CartItem cartItem)
         {
+            // check if the user is authenticated, if use get cart items from database
+            if((await _authStateProvider.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated)
+            {
+                Console.WriteLine("User is authenticated");
+            }
+            else
+            {
+                Console.WriteLine("user is NOT authenticated");
+            }
             var cart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
             if (cart == null)
             {
@@ -94,6 +107,24 @@ namespace SmartShop.Client.Services.CartService
                 cartItem.Quantity = product.Quantity;
                 await _localStorage.SetItemAsync("cart", cart);
                
+            }
+        }
+
+        public async Task StoreCarItems(bool emptyLocalCart =false)
+        {
+            // get cart item from local storage
+            var localCart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
+            if(localCart == null)
+            {
+                return;
+            }
+
+            // passing data to backend to store the items
+            await _http.PostAsJsonAsync("api/cart", localCart);
+            //impty local storage if requested 
+            if (emptyLocalCart)
+            {
+                await _localStorage.RemoveItemAsync("cart");
             }
         }
     }
