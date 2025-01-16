@@ -1,16 +1,25 @@
 ﻿
 using SmartShop.Server.Data;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+
 
 namespace SmartShop.Server.Services.CartService
 {
     public class CartService : ICartService
     {
         private readonly DataContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;  
 
-        public CartService(DataContext context)
+
+        public CartService(DataContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
+
+        private int GetUserId()=> int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+        
         public async Task<ServiceResponse<List<CartProductResponse>>> GetCartProducts(List<CartItem> cartItems)
         {
             var result = new ServiceResponse<List<CartProductResponse>> { 
@@ -37,7 +46,8 @@ namespace SmartShop.Server.Services.CartService
                     continue;
                 }
 
-                var cartProduct = new CartProductResponse { 
+                var cartProduct = new CartProductResponse 
+                { 
                     ProductId = product.Id,
                     Title =product.Title,
                     ImageUrl = product.ImageUrl,
@@ -51,6 +61,17 @@ namespace SmartShop.Server.Services.CartService
 
             }
             return result;
+        }
+
+        public async Task<ServiceResponse<List<CartProductResponse>>> StoreCartItems(List<CartItem> cartItems)
+        {
+            cartItems.ForEach(cartItem => cartItem.UserId = GetUserId());
+            _context.CartItems.AddRange(cartItems);
+            await _context.SaveChangesAsync();
+
+            return await GetCartProducts(
+                await _context.CartItems
+                .Where(ci => ci.UserId == GetUserId()).ToListAsync());
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 //using SmartShop.Client.Services.CartService;
 using SmartShop.Server.Services.CartService;
+using System.Security.Claims;
 
 namespace SmartShop.Server.Controllers
 {
@@ -23,6 +24,15 @@ namespace SmartShop.Server.Controllers
 
             var result = await _cartService.GetCartProducts(cartItems);
             return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ServiceResponse<List<CartProductResponse>>>> StoreCartItems(List<CartItem>cartItems)
+        {
+           
+            var result = await _cartService.StoreCartItems(cartItems);
+            return Ok(result);
+
         }
     }
 }

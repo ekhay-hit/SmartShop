@@ -10,7 +10,7 @@ namespace SmartShop.Client.Services.CartService
         private readonly ILocalStorageService _localStorage;
         public HttpClient _http { get; }
 
-        private AuthenticationStateProvider _authStateProvider;
+        private readonly AuthenticationStateProvider _authStateProvider;
 
 
         public CartService(ILocalStorageService localStorage, HttpClient http, AuthenticationStateProvider authStateProvider)
