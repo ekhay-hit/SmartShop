@@ -8,8 +8,7 @@ namespace SmartShop.Client.Services.CartService
     {
 
         private readonly ILocalStorageService _localStorage;
-        public HttpClient _http { get; }
-
+        public readonly HttpClient _http;
         private readonly AuthenticationStateProvider _authStateProvider;
 
 
@@ -51,11 +50,12 @@ namespace SmartShop.Client.Services.CartService
             }
 
             await _localStorage.SetItemAsync("cart", cart);
-            OnChange.Invoke();
+            await GetCartItemsCount();
         }
         
         public async Task<List<CartItem>> GetCartItems()
         {
+            await GetCartItemsCount();
             var cart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
             if(cart == null)
             {
@@ -63,6 +63,23 @@ namespace SmartShop.Client.Services.CartService
             }
 
                 return cart;
+        }
+        public async Task GetCartItemsCount()
+        {
+            if(await IsUserAuthenticated())
+            {
+                var result = await _http.GetFromJsonAsync < ServiceResponse<int> > ("api/cart/count");
+                var count = result.Data;
+                // storing in local storage
+                await _localStorage.SetItemAsync("cartItemsCount", count);
+            }
+            else
+            {
+                var cart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
+                await _localStorage.SetItemAsync<int>("cartItemsCount", cart != null ? cart.Count : 0);
+            }
+
+            OnChange.Invoke();
         }
 
         public async Task<List<CartProductResponse>> GetCartProducts()
@@ -87,7 +104,7 @@ namespace SmartShop.Client.Services.CartService
             {
                 cart.Remove(cartItem);
                 await _localStorage.SetItemAsync("cart",cart);
-                OnChange.Invoke();
+                await GetCartItemsCount();
             }
            
 
@@ -130,7 +147,7 @@ namespace SmartShop.Client.Services.CartService
 
         private async Task<bool> IsUserAuthenticated()
         {
-            return (await _authStateProvider.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated
+            return (await _authStateProvider.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated;
         }
     }
 }

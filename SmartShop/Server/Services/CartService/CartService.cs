@@ -17,7 +17,7 @@ namespace SmartShop.Server.Services.CartService
             _context = context;
             _httpContextAccessor = httpContextAccessor;
         }
-
+        
         private int GetUserId()=> int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
         
         public async Task<ServiceResponse<List<CartProductResponse>>> GetCartProducts(List<CartItem> cartItems)
@@ -73,6 +73,8 @@ namespace SmartShop.Server.Services.CartService
                 await _context.CartItems
                 .Where(ci => ci.UserId == GetUserId()).ToListAsync());
         }
+        
+        // request to get the count items in the user's cart
         public async Task<ServiceResponse<int>> GetCartItemsCount()
         {
             var count = (await _context.CartItems.Where(ci =>ci == GetUserId()).ToListAsync()).Count;
