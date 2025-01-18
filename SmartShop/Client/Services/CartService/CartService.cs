@@ -27,7 +27,7 @@ namespace SmartShop.Client.Services.CartService
         public async Task AddToCart(CartItem cartItem)
         {
             // check if the user is authenticated, if use get cart items from database
-            if((await _authStateProvider.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated)
+            if(IsUserAuthenticated())
             {
                 Console.WriteLine("User is authenticated");
             }
@@ -53,7 +53,7 @@ namespace SmartShop.Client.Services.CartService
             await _localStorage.SetItemAsync("cart", cart);
             OnChange.Invoke();
         }
-
+        
         public async Task<List<CartItem>> GetCartItems()
         {
             var cart = await _localStorage.GetItemAsync<List<CartItem>>("cart");
@@ -126,6 +126,11 @@ namespace SmartShop.Client.Services.CartService
             {
                 await _localStorage.RemoveItemAsync("cart");
             }
+        }
+
+        private async Task<bool> IsUserAuthenticated()
+        {
+            return (await _authStateProvider.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated
         }
     }
 }
