@@ -61,6 +61,7 @@
             await AuthenticationStateProvider.GetAuthenticationStateAsync();
             //store the item in the cart locatstroage and empty it by calling the 
             await CartService.StoreCarItems(true);
+            await CartService.GetCartItemsCount();
             NavigationManager.NavigateTo(returnUrl);
         }
         else

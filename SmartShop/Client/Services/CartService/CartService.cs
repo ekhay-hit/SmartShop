@@ -26,7 +26,7 @@ namespace SmartShop.Client.Services.CartService
         public async Task AddToCart(CartItem cartItem)
         {
             // check if the user is authenticated, if use get cart items from database
-            if(IsUserAuthenticated())
+            if(await IsUserAuthenticated())
             {
                 Console.WriteLine("User is authenticated");
             }

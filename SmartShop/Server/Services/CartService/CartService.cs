@@ -77,7 +77,7 @@ namespace SmartShop.Server.Services.CartService
         // request to get the count items in the user's cart
         public async Task<ServiceResponse<int>> GetCartItemsCount()
         {
-            var count = (await _context.CartItems.Where(ci =>ci == GetUserId()).ToListAsync()).Count;
+            var count = (await _context.CartItems.Where(ci =>ci.UserId == GetUserId()).ToListAsync()).Count;
             return new ServiceResponse<int>{  Data= count };
         }
     }
