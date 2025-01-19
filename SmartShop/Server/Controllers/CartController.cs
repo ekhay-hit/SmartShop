@@ -41,5 +41,12 @@ namespace SmartShop.Server.Controllers
             var result = await _cartService.GetCartItemsCount();
             return Ok(result);
         }
+
+        [HttpGet]
+        public async Task<ActionResult<ServiceResponse<List<CartProductResponse>>>> GetDbCartProducts()
+        {
+            var result = await _cartService.GetDbCartProducts();
+            return Ok(result);
+        }
     }
 }
