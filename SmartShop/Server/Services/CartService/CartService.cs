@@ -110,7 +110,7 @@ namespace SmartShop.Server.Services.CartService
             var dbCartItem = await _context.CartItems
                 .FirstOrDefaultAsync(ci => ci.ProductId == cartItem.ProductId &&
                 ci.ProductTypeId == cartItem.ProductTypeId &&
-                ci.UserId == cartItem.UserId);
+                ci.UserId == GetUserId());
             if(dbCartItem == null)
             {
                 return new ServiceResponse<bool> { 
