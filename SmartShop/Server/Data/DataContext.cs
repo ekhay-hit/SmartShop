@@ -8,8 +8,8 @@
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CartItem>()
-                .HasKey(ci => new {ci.UserId, ci.ProductId, ci.ProductTypeId });
+            modelBuilder.Entity<CartItem>()  
+             .HasKey(ci => new { ci.UserId, ci.ProductId, ci.ProductTypeId });
 
 
 

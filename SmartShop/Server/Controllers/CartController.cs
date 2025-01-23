@@ -35,7 +35,7 @@ namespace SmartShop.Server.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<ActionResult<ServiceResponse<bool>>> AddToCart(CartItem cartItems)
+        public async Task<ActionResult<ServiceResponse<bool>>> AddToCart(CartItem cartItem)
         {
             var result = await _cartService.AddToCart(cartItem);
             return Ok(result);

@@ -88,6 +88,7 @@ namespace SmartShop.Server.Services.CartService
         public async Task<ServiceResponse<bool>>AddToCart(CartItem cartItem)
         {
             cartItem.UserId = GetUserId();
+
             var sameItem = await _context.CartItems
                 .FirstOrDefaultAsync(ci => ci.ProductId == cartItem.ProductId &&
                 ci.ProductTypeId == cartItem.ProductTypeId &&
@@ -101,7 +102,30 @@ namespace SmartShop.Server.Services.CartService
                 sameItem.Quantity += cartItem.Quantity;
             }
             await _context.SaveChangesAsync();
-            return new ServiceResponse<bool> { Data= sameItem };
+            return new ServiceResponse<bool> { Data= true };
+        }
+
+        public async Task<ServiceResponse<bool>>UpdateQuantity(CartItem cartItem)
+        {
+            var dbCartItem = await _context.CartItems
+                .FirstOrDefaultAsync(ci => ci.ProductId == cartItem.ProductId &&
+                ci.ProductTypeId == cartItem.ProductTypeId &&
+                ci.UserId == cartItem.UserId);
+            if(dbCartItem == null)
+            {
+                return new ServiceResponse<bool> { 
+                    Data= false,
+                    success= true,
+                    Message="Cart itme does not exist"
+                };
+
+            }
+
+            dbCartItem.Quantity = cartItem.Quantity;
+            await _context.SaveChangesAsync();
+            return new ServiceResponse<bool> { Data = true };
+
         }
     }
+
 }
