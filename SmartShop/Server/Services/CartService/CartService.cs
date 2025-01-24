@@ -2,6 +2,7 @@
 using SmartShop.Server.Data;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace SmartShop.Server.Services.CartService
@@ -125,6 +126,28 @@ namespace SmartShop.Server.Services.CartService
             await _context.SaveChangesAsync();
             return new ServiceResponse<bool> { Data = true };
 
+        }
+
+        public async Task<ServiceResponse<bool>>RemoveItemFromCart(int productId, int productTypeId)
+        {
+            var dbCartItem = await _context.CartItems.FirstOrDefaultAsync( 
+                ci=> ci.ProductId == productId &&
+                ci.ProductTypeId == productTypeId &&
+                ci.UserId == GetUserId());
+
+            if(dbCartItem == null)
+            {
+                return new ServiceResponse<bool>
+                {
+                    Data = false,
+                    success = false,
+                    Message = "item not found in the cart"
+                };
+            }
+            _context.CartItems.Remove(dbCartItem);
+            await _context.SaveChangesAsync();
+            return new ServiceResponse<bool> { Data = true };
+           
         }
     }
 
