@@ -94,7 +94,7 @@ namespace SmartShop.Client.Services.CartService
         public async Task RemoveProductFromCart(int productId, int productTypeId)
         {
             if (await IsUserAuthenticated())
-            {
+            {  
                 await _http.DeleteAsync($"api/cart/{productID}/{productTypeId}")
             }
             else
