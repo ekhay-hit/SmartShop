@@ -61,10 +61,11 @@ namespace SmartShop.Server.Controllers
             var result = await _cartService.UpdateQuantity(cartItem); 
             return Ok(result);
         }
-        [HttpDelete("{productId}/{productTypeId}")]
+
+        [HttpDelete("{productId}/{productTypeId}")] 
         public async Task<ActionResult<ServiceResponse<bool>>>RemoveItemFromCart(int productId, int productTypeid)
         {
-            var result = await _cartService.RemoveItemFromCartId(productId, productTypeid);
+            var result = await _cartService.RemoveItemFromCart(productId, productTypeid);
             return Ok(result);
         }
     }

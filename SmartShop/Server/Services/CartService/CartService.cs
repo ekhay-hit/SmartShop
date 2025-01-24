@@ -127,7 +127,7 @@ namespace SmartShop.Server.Services.CartService
             return new ServiceResponse<bool> { Data = true };
 
         }
-
+      
         public async Task<ServiceResponse<bool>>RemoveItemFromCart(int productId, int productTypeId)
         {
             var dbCartItem = await _context.CartItems.FirstOrDefaultAsync( 
