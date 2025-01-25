@@ -3,10 +3,12 @@ global using SmartShop.Server.Services.ProductServer;
 global using SmartShop.Server.Services.CategoryService;
 global using Microsoft.EntityFrameworkCore;
 global using SmartShop.Server.Services.AuthService;
+global using SmartShop.Server.Services.OrderService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using SmartShop.Server.Data;
 using SmartShop.Server.Services.CartService;
 using Microsoft.IdentityModel.Tokens;
+
 
 
 
@@ -27,6 +29,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
 {
@@ -65,6 +68,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapControllers();

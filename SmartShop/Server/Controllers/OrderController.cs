@@ -5,7 +5,7 @@ namespace SmartShop.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderControllercs : ControllerBase
+    public class OrderController : ControllerBase
     {
     }
 }

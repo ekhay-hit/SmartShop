@@ -1,6 +1,7 @@
 ﻿
-using SmartShop.Client.Services.CartService;
+using SmartShop.Server.Services.CartService;
 using SmartShop.Server.Data;
+using System.Security.Claims;
 
 namespace SmartShop.Server.Services.OrderService
 {
@@ -18,11 +19,34 @@ namespace SmartShop.Server.Services.OrderService
             _cartService = cartService;
             _httpContextAccessor = httpContextAccessor;
         }
-
-        public Task<ServiceResponse<bool>> PlaceOrder()
+        private int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+        public async Task<ServiceResponse<bool>> PlaceOrder()
         
         {
-            throw new NotImplementedException();
+            var products = (await _cartService.GetDbCartProducts()).Data;
+            decimal totalPrice = 0;
+            products.ForEach(product => totalPrice += product.Price * product.Quantity);
+
+            var orderItems = new List<OrderItem>();
+            products.ForEach(product => orderItems.Add(new OrderItem { 
+                ProductId = product.ProductId,
+                ProductTypeId = product.ProductTypeId,
+                Quantity = product.Quantity,
+                TotalPrice = product.Price * product.Quantity
+            }));
+
+            var order = new Order { 
+                UserId = GetUserId(),
+                OrderDate = DateTime.Now,
+                TotalPrice = totalPrice,
+                OrderItems = orderItems
+            };
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
+
+            return new ServiceResponse<bool> { Data = true };
+
+
         }
     }
 }
