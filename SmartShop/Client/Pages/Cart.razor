@@ -6,6 +6,8 @@
 @if(cartProducts== null || cartProducts.Count == 0)
 {
     <span>@message</span>
+}else if(orderPlaced){
+    <span>Thank you for your order. Check your order <a href="orders">Here</a>.</span>
 }
 else
 {
@@ -42,10 +44,11 @@ else
 @code {
     List<CartProductResponse> cartProducts = null;
     string message = "Loading cart ...";
-
+    bool orderPlaced = false;
 
     protected override async Task OnInitializedAsync()
     {
+        orderPlaced = false;
         await LoadCart();
     }
 
@@ -82,5 +85,9 @@ else
 
     private async Task PlaceOrder(){
         await OrderServiceUI.PlaceOrder();
+        await CartService.GetCartItemsCount();
+        orderPlaced = true;
+
+
     }
 }
