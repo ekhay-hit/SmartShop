@@ -2,7 +2,7 @@
 
 namespace SmartShop.Client.Services.ProductService
 {
-    public interface IProductService
+    public interface IProductServiceUI
     {
         
         event Action ProductsChanged;

@@ -1,6 +1,6 @@
 ﻿namespace SmartShop.Client.Services.CartService
 {
-    public interface ICartService
+    public interface ICartServiceUI
     {
         event Action OnChange;
 

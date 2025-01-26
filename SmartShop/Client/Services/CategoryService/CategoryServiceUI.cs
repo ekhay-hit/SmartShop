@@ -1,11 +1,11 @@
 ﻿
 namespace SmartShop.Client.Services.CategoryService
 {
-    public class CategoryService : ICategoryService
+    public class CategoryServiceUI : ICategoryServiceUI
     {
         public readonly HttpClient _http;
 
-        public CategoryService(HttpClient http )
+        public CategoryServiceUI(HttpClient http )
         {
             _http= http;
         }

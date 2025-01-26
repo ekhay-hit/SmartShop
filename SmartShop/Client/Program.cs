@@ -4,8 +4,9 @@ global using SmartShop.Client.Services.ProductService;
 global using SmartShop.Client.Services.CategoryService;
 global using SmartShop.Client.Services.CartService;
 global using SmartShop.Client.Services.AuthService;
-
+global using SmartShop.Client.Services.OrderServices;
 global using Microsoft.AspNetCore.Components.Authorization;
+
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using SmartShop.Client;
@@ -20,10 +21,11 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<ICartService, CartService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IProductServiceUI, ProductServiceUI>();
+builder.Services.AddScoped<ICategoryServiceUI, CategoryServiceUI>();
+builder.Services.AddScoped<ICartServiceUI, CartServiceUI>();
+builder.Services.AddScoped<IAuthServiceUI, AuthServiceUI>();
+builder.Services.AddScoped<IOrderServiceUI, OrderServiceUI>();
 
 builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore();

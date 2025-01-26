@@ -1,5 +1,6 @@
 ﻿@page "/cart"
-@inject ICartService CartService
+@inject ICartServiceUI CartService
+@inject IOrderServiceUI OrderServiceUI
 <PageTitle >Shopping Cart</PageTitle>
 <h3>Shopping Cart</h3>
 @if(cartProducts== null || cartProducts.Count == 0)
@@ -19,13 +20,13 @@ else
                     <h5><a href="/product/@product.ProductId">@product.Title</a></h5>
                     <span>@product.ProductType</span><br />
 
-                   <input type="number" value="@product.Quantity" 
-                   @onchange="@((ChangeEventArgs e)=> UpdateQuantity(e,product))" class="form-control input-quantity" min="1"/>
-                    
+                    <input type="number" value="@product.Quantity" 
+                    @onchange="@((ChangeEventArgs e)=> UpdateQuantity(e,product))" class="form-control input-quantity" min="1"/>
+
                     <button class="btn-delete" @onclick ="@(()=>
                         RemoveProductFromCart(product.ProductId, product.ProductTypeId))">Delete</button>
                 </div>
-                    <div class="cart-product-price">$@(product.Price * product.Quantity)</div>
+                <div class="cart-product-price">$@(product.Price * product.Quantity)</div>
             </div>
 
         }
@@ -34,6 +35,8 @@ else
             Total(@cartProducts.Count): $@cartProducts.Sum(product => product.Price * product.Quantity)
         </div>
     </div>
+
+    <button @onclick = "PlaceOrder" class="btn alert-success float-right mt-1">Place Order</button>
 }
 
 @code {
@@ -46,7 +49,6 @@ else
         await LoadCart();
     }
 
-
     private async Task RemoveProductFromCart( int productId, int productTypeId)
     {
         await CartService.RemoveProductFromCart(productId, productTypeId);
@@ -56,7 +58,7 @@ else
     private async Task LoadCart()
     {
         await CartService.GetCartItemsCount();
-         cartProducts = await CartService.GetCartProducts();
+        cartProducts = await CartService.GetCartProducts();
         if (cartProducts == null || cartProducts.Count == 0)
         {
             message = "Your cart is empty.";
@@ -75,6 +77,10 @@ else
 
         if (product.Quantity < 1)
             product.Quantity = 1;
-            await CartService.UpdateQuantity(product);
+        await CartService.UpdateQuantity(product);
+    }
+
+    private async Task PlaceOrder(){
+        await OrderServiceUI.PlaceOrder();
     }
 }

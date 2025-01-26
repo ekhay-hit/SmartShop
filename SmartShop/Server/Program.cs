@@ -1,7 +1,7 @@
+global using Microsoft.EntityFrameworkCore;
 global using SmartShop.Shared;
 global using SmartShop.Server.Services.ProductServer;
 global using SmartShop.Server.Services.CategoryService;
-global using Microsoft.EntityFrameworkCore;
 global using SmartShop.Server.Services.AuthService;
 global using SmartShop.Server.Services.OrderService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -22,9 +22,9 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICartService, CartService>();

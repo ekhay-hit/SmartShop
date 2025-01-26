@@ -1,6 +1,6 @@
 ﻿namespace SmartShop.Client.Services.CategoryService
 {
-    public interface ICategoryService
+    public interface ICategoryServiceUI
     {
        List<Category> Categories { get; set; }
         Task GetCategories();

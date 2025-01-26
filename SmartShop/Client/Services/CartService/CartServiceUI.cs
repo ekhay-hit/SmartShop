@@ -4,7 +4,7 @@ using SmartShop.Shared;
 
 namespace SmartShop.Client.Services.CartService
 {
-    public class CartService : ICartService
+    public class CartServiceUI : ICartServiceUI
     {
 
         private readonly ILocalStorageService _localStorage;
@@ -12,7 +12,7 @@ namespace SmartShop.Client.Services.CartService
         private readonly AuthenticationStateProvider _authStateProvider;
 
 
-        public CartService(ILocalStorageService localStorage, HttpClient http, AuthenticationStateProvider authStateProvider)
+        public CartServiceUI(ILocalStorageService localStorage, HttpClient http, AuthenticationStateProvider authStateProvider)
         {
             _localStorage = localStorage;
             _http = http;

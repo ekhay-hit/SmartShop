@@ -2,13 +2,13 @@
 
 namespace SmartShop.Client.Services.ProductService
 {
-    public class ProductService : IProductService
+    public class ProductServiceUI : IProductServiceUI
     {
         private readonly HttpClient _http;
 
         
 
-        public ProductService(HttpClient http)
+        public ProductServiceUI(HttpClient http)
         {
             _http = http;
         }

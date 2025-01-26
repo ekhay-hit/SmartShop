@@ -1,11 +1,11 @@
 ﻿
 namespace SmartShop.Client.Services.AuthService
 {
-    public class AuthService : IAuthService
+    public class AuthServiceUI : IAuthServiceUI
     {
         private readonly HttpClient _http;
 
-        public AuthService(HttpClient http)
+        public AuthServiceUI(HttpClient http)
         {
             _http = http;
         }
