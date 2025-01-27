@@ -20,5 +20,11 @@ namespace SmartShop.Server.Controllers
             var result = await _orderService.PlaceOrder();
             return Ok(result);
         }
+
+        [HttpGet]
+        public async Task<ActionResult<ServiceResponse<OrderOverviewResponse>>> GetOrders()
+        {
+
+        }
     }
 }
