@@ -1,0 +1,13 @@
+﻿@page "/orders"
+@inject IOrderServiceUI OrderServiceUI
+<h3>Orders</h3>
+
+@code {
+    List<OrderOverviewResponse> orders = null;
+
+    protected override async OnInitializedAsync()
+    {
+        orders = await OrderServiceUI.GetOrders();
+    }
+
+}

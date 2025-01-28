@@ -3,5 +3,6 @@
     public interface IOrderServiceUI
     {
         Task PlaceOrder();
+        Task<List<OrderOverviewResponse>> GetOrders();
     }
 }
