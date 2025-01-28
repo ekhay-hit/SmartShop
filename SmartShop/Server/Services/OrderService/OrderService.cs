@@ -24,27 +24,62 @@ namespace SmartShop.Server.Services.OrderService
 
         public async Task<ServiceResponse<List<OrderOverviewResponse>>> GetOrders()
         {
-           var response = new ServiceResponse<List<OrderOverviewResponse>>();   
+           var response = new ServiceResponse<List<OrderOverviewResponse>>();
+
+            var userId = _authService.GetUserId();
+            Console.WriteLine($"UserId*******************************************************: {userId}");
+
             var orders = await _context.Orders.
                 Include(o => o.OrderItems)
                 .ThenInclude(oi=> oi.Product)
-                .Where(o=>o.UserId == _authService.GetUserId())
+                .Where(o=>o.UserId == userId)
                 .OrderByDescending(o => o.OrderDate)
                 .ToListAsync();
 
+            Console.WriteLine($"Orders Count****************************************: {orders.Count}");
             var orderResponse = new List<OrderOverviewResponse>();
-            orders.ForEach(o => orderResponse.Add(new OrderOverviewResponse
-            {
-                Id = o.Id,
-                OrderDate = o.OrderDate,
-                TotalPrice = o.TotalPrice,
-                Product = o.OrderItems.Count > 1 ?
-                $"{o.OrderItems.First().Product.Title} and" + 
-                $"{o.OrderItems.Count - 1} more..." :
-                o.OrderItems.First().Product.Title,
-                ProductImage = o.OrderItems.First().Product.ImageUrl
-            }));
+            //orders.ForEach(o => orderResponse.Add(new OrderOverviewResponse
+            //{
+            //    Id = o.Id,
+            //    OrderDate = o.OrderDate,
+            //    TotalPrice = o.TotalPrice,
+            //    Product = o.OrderItems.Count > 1 ?
+            //    $"{o.OrderItems.First().Product.Title} and" + 
+            //    $"{o.OrderItems.Count - 1} more..." :
+            //    o.OrderItems.First().Product.Title,
+            //    ProductImageUrl = o.OrderItems.First().Product.ImageUrl
+            //}));
 
+            orders.ForEach(o =>
+            {
+                // Check if there are any OrderItems in the order
+                var firstOrderItem = o.OrderItems.FirstOrDefault();
+
+                // If there are no order items, you can skip this order or handle it as needed.
+                if (firstOrderItem != null)
+                {
+                    orderResponse.Add(new OrderOverviewResponse
+                    {
+                        Id = o.Id,
+                        OrderDate = o.OrderDate,
+                        TotalPrice = o.TotalPrice,
+                        Product = o.OrderItems.Count > 1 ?
+                            $"{firstOrderItem.Product.Title} and {o.OrderItems.Count - 1} more..." :
+                            firstOrderItem.Product.Title,
+                        ProductImageUrl = firstOrderItem.Product.ImageUrl
+                    });
+                }
+                else
+                {
+                    // Optionally log or handle the case where an order has no items
+                    Console.WriteLine($"Order ID {o.Id} has no items.");
+                }
+            });
+
+            Console.WriteLine($"Orders Processed: {orderResponse.Count}");
+
+
+            Console.WriteLine(orders.Count);
             response.Data = orderResponse;
 
             return response;

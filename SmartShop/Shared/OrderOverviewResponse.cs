@@ -12,7 +12,7 @@ namespace SmartShop.Shared
         public DateTime OrderDate { get; set; }
         public decimal TotalPrice { get; set; }
         public string Product {  get; set; }
-        public string ProductImage { get; set; }
+        public string ProductImageUrl { get; set; }
 
     }
 }
