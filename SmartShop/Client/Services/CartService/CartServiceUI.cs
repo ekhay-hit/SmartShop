@@ -9,14 +9,16 @@ namespace SmartShop.Client.Services.CartService
 
         private readonly ILocalStorageService _localStorage;
         public readonly HttpClient _http;
-        private readonly AuthenticationStateProvider _authStateProvider;
+        private readonly IAuthServiceUI _authService;
+       
 
 
-        public CartServiceUI(ILocalStorageService localStorage, HttpClient http, AuthenticationStateProvider authStateProvider)
+        public CartServiceUI(ILocalStorageService localStorage, HttpClient http, IAuthServiceUI authService)
         {
             _localStorage = localStorage;
             _http = http;
-            _authStateProvider = authStateProvider;
+            _authService = authService;
+           
         }
 
         
@@ -26,7 +28,7 @@ namespace SmartShop.Client.Services.CartService
         public async Task AddToCart(CartItem cartItem)
         {
             // check if the user is authenticated, if use get cart items from database
-            if(await IsUserAuthenticated())
+            if(await _authService.IsUserAuthenticated())
             {
                 await _http.PostAsJsonAsync("api/cart/add",cartItem);
             }
@@ -55,7 +57,7 @@ namespace SmartShop.Client.Services.CartService
    
         public async Task GetCartItemsCount()
         {
-            if(await IsUserAuthenticated())
+            if(await _authService.IsUserAuthenticated())
             {
                 var result = await _http.GetFromJsonAsync < ServiceResponse<int> > ("api/cart/count");
                 var count = result.Data;
@@ -73,7 +75,7 @@ namespace SmartShop.Client.Services.CartService
 
         public async Task<List<CartProductResponse>> GetCartProducts()
         {
-            if (await IsUserAuthenticated())
+            if (await _authService.IsUserAuthenticated())
             {
                 var response = await _http.GetFromJsonAsync<ServiceResponse<List<CartProductResponse>>>("api/cart");
                 return response.Data;
@@ -93,7 +95,7 @@ namespace SmartShop.Client.Services.CartService
 
         public async Task RemoveProductFromCart(int productId, int productTypeId)
         {
-            if (await IsUserAuthenticated())
+            if (await _authService.IsUserAuthenticated())
             {
                 await _http.DeleteAsync($"api/cart/{productId}/{productTypeId}");
             }
@@ -123,7 +125,7 @@ namespace SmartShop.Client.Services.CartService
 
         public async Task UpdateQuantity(CartProductResponse product)
         {
-            if (await IsUserAuthenticated())
+            if (await _authService.IsUserAuthenticated())
             {
                 var request = new CartItem
                 {
@@ -170,9 +172,6 @@ namespace SmartShop.Client.Services.CartService
             }
         }
 
-        private async Task<bool> IsUserAuthenticated()
-        {
-            return (await _authStateProvider.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated;
-        }
+       
     }
 }

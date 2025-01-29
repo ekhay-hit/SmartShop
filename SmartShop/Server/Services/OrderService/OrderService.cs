@@ -26,7 +26,7 @@ namespace SmartShop.Server.Services.OrderService
         {
             var response = new ServiceResponse<OrderDetailsResponse>();
             var userId = _authService.GetUserId();
-             orderId = 15;
+             //orderId = 15;
 
             if (userId == 0)
             {
