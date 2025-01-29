@@ -21,14 +21,14 @@ namespace SmartShop.Server.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
+        [HttpGet] //api/order
         public async Task<ActionResult<ServiceResponse<List<OrderOverviewResponse>>>> GetOrders()
         {
             var result = await _orderService.GetOrders();
             return Ok(result);
         }
 
-        [HttpGet("{orderId}")]
+        [HttpGet("{orderId}")]// api/order/orderId
         public async Task<ActionResult<ServiceResponse<OrderDetailsResponse>>>GetOrderDetails(int orderId)
         {
             var result = await _orderService.GetOrderDetails(orderId);

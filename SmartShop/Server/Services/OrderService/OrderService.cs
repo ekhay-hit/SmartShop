@@ -25,44 +25,55 @@ namespace SmartShop.Server.Services.OrderService
         public async Task<ServiceResponse<OrderDetailsResponse>> GetOrderDetails(int orderId)
         {
             var response = new ServiceResponse<OrderDetailsResponse>();
-            //loop through the order in find the order base on the id then include product on the order
+            var userId = _authService.GetUserId();
+             orderId = 15;
+
+            if (userId == 0)
+            {
+                response.success = false;
+                response.Message = "User ID is not valid.";
+                return response;
+            }
+
+            Console.WriteLine($"UserId in GetOrderDetails: {userId}");
+
             var order = await _context.Orders
                 .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.Product)
                 .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.ProductType)
-                .Where(o => o.UserId == _authService.GetUserId() && o.Id == orderId)
+                .Where(o => o.UserId == userId && o.Id == orderId)
                 .OrderByDescending(o => o.OrderDate)
                 .FirstOrDefaultAsync();
 
-            if(order == null)
+            if (order == null)
             {
                 response.success = false;
-                response.Message = "Order not found";
+                response.Message = "Order not found.";
                 return response;
-            };
+            }
 
-            var orderDetailResponse = new OrderDetailsResponse {
+            var orderDetailsResponse = new OrderDetailsResponse
+            {
                 OrderDate = order.OrderDate,
                 TotalPrice = order.TotalPrice,
                 Products = new List<OrderDetailsProductResponse>()
             };
 
             order.OrderItems.ForEach(item =>
-            orderDetailResponse.Products.Add(new OrderDetailsProductResponse
-            { 
+            orderDetailsResponse.Products.Add(new OrderDetailsProductResponse
+            {
                 ProductId = item.ProductId,
                 ImageUrl = item.Product.ImageUrl,
                 ProductType = item.ProductType.Name,
                 Quantity = item.Quantity,
                 Title = item.Product.Title,
-                TotalPrice = item.TotalPrice,
-
+                TotalPrice = item.TotalPrice
             }));
 
-            response.Data = orderDetailResponse;
-            return response;
+            response.Data = orderDetailsResponse;
 
+            return response;
 
 
         }
