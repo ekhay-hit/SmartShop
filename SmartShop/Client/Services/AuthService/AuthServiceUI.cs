@@ -4,10 +4,17 @@ namespace SmartShop.Client.Services.AuthService
     public class AuthServiceUI : IAuthServiceUI
     {
         private readonly HttpClient _http;
+        private readonly AuthenticationStateProvider _authStateProvider;
 
-        public AuthServiceUI(HttpClient http)
+        public AuthServiceUI(HttpClient http, AuthenticationStateProvider authStateProvider)
         {
             _http = http;
+            _authStateProvider = authStateProvider;
+        }
+
+        public async Task<bool> IsUserAuthenticated()
+        {
+            return (await _authStateProvider.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated;
         }
 
         public async Task<ServiceResponse<string>> Login(UserLogin request)
