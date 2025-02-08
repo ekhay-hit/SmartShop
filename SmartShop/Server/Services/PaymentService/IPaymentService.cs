@@ -1,4 +1,4 @@
-﻿using Stripe.BillingPortal;
+﻿using Stripe.Checkout;
 
 namespace SmartShop.Server.Services.PaymentService
 {
