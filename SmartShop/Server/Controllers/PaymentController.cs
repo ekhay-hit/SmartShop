@@ -21,5 +21,14 @@ namespace SmartShop.Server.Controllers
             var session = await _paymentService.CreateoutCheckoutSession();
             return Ok(session.Url);
         }
+
+        [HttpPost]
+        public async Task<ActionResult<ServiceResponse<bool>>> FulfillOreder()
+        {
+            var response = await _paymentService.FulfillOrder(Request);
+            if (!response.success)
+                return BadRequest(response.Message);
+            return Ok(response);
+        }
     }
 }
