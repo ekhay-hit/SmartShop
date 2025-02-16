@@ -5,6 +5,7 @@ global using SmartShop.Client.Services.CategoryService;
 global using SmartShop.Client.Services.CartService;
 global using SmartShop.Client.Services.AuthService;
 global using SmartShop.Client.Services.OrderServices;
+global using SmartShop.Client.Services.AddressService;
 global using Microsoft.AspNetCore.Components.Authorization;
 
 using Microsoft.AspNetCore.Components.Web;
@@ -26,6 +27,7 @@ builder.Services.AddScoped<ICategoryServiceUI, CategoryServiceUI>();
 builder.Services.AddScoped<ICartServiceUI, CartServiceUI>();
 builder.Services.AddScoped<IAuthServiceUI, AuthServiceUI>();
 builder.Services.AddScoped<IOrderServiceUI, OrderServiceUI>();
+builder.Services.AddScoped<IAddressServiceUI, AddressServiceUI>();
 
 builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore();

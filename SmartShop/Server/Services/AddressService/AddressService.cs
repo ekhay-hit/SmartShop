@@ -38,6 +38,7 @@ namespace SmartShop.Server.Services.AddressService
                 dbAddress.Zip = address.Zip;
                 dbAddress.Country = address.Country;
                 dbAddress.Street = address.Street;
+                response.Data = dbAddress;
 
             }
             //wait untill the changes are saved. 
