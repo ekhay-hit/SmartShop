@@ -1,8 +1,7 @@
 ﻿using SmartShop.Server.Services.CartService;
 using Stripe;
-
 using Stripe.Checkout;
-using Stripe.TestHelpers.Treasury;
+
 
 namespace SmartShop.Server.Services.PaymentService
 {
@@ -11,6 +10,8 @@ namespace SmartShop.Server.Services.PaymentService
         private readonly ICartService _cartService;
         private readonly IOrderService _orderService;
         private readonly IAuthService _authService;
+
+        const string secret = "whsec_406169c308ada8fccc311a43e32bd287df2c1166bb45cd9a7c5946659213127f";
 
         public PaymentService(ICartService cartService,
             IOrderService orderService,
@@ -44,6 +45,11 @@ namespace SmartShop.Server.Services.PaymentService
             var options = new SessionCreateOptions
             {
                 CustomerEmail = _authService.GetUserEmail(),
+                ShippingAddressCollection = new SessionShippingAddressCollectionOptions
+                {
+                    AllowedCountries = new List<string> { "US"}
+                }
+
                 PaymentMethodTypes = new List<string>
                 {
                     "card"
@@ -58,6 +64,33 @@ namespace SmartShop.Server.Services.PaymentService
             Session session =  service.Create(options);
             return session;
 
+        }
+
+        public async Task<ServiceResponse<bool>> FulfillOrder(HttpRequest request)
+        {
+           var json = await new StreamReader(request.Body).ReadToEndAsync();
+            try
+            {
+                var stripeEvent = EventUtility.ConstructEvent(
+                    json,
+                    request.Headers["Stripe-Signature"],
+                    secret
+                    );
+
+                if (stripeEvent.Type == "checkout.session.completed")
+                {
+                    var session = stripeEvent.Data.Object as Session;
+                    var user = await _authService.GetUserByEmail(session.CustomerEmail);
+
+                    await _orderService.PlaceOrder(user.Id);
+                   
+                }
+                return new ServiceResponse<bool> { Data = true };
+            }
+            catch(StripeException e)
+            {
+                return new ServiceResponse<bool> { Data = false, success = false, Message =e.Message };
+            };
         }
     }
     }
