@@ -48,7 +48,7 @@ namespace SmartShop.Server.Services.PaymentService
                 ShippingAddressCollection = new SessionShippingAddressCollectionOptions
                 {
                     AllowedCountries = new List<string> { "US"}
-                }
+                },
 
                 PaymentMethodTypes = new List<string>
                 {
